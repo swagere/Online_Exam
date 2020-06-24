@@ -12,7 +12,7 @@ public interface RegisterService {
 
     void sendTeacherEmail(String receiver) throws Exception;
 
-    void checkStudentRepeat(String email);
+    void checkStudentRepeat(String email) throws Exception;
 
     void sendStudentEmail(String receiver) throws Exception;
 }
