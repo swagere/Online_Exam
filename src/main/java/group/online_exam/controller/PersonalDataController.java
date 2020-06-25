@@ -38,7 +38,7 @@ public class PersonalDataController {
      * @param request
      * @return
      */
-    @GetMapping("/getTeacher")
+    @PostMapping("/getTeacher")
     public AjaxResponse getTeacherData(HttpServletRequest request){
         authorityCheckService.checkTeacherAuthority(request.getSession().getAttribute("userInfo"));
         Map m = (Map) request.getSession().getAttribute("userInfo");
@@ -56,7 +56,7 @@ public class PersonalDataController {
      * @param request
      * @return
      */
-    @GetMapping("/getStudent")
+    @PostMapping("/getStudent")
      public AjaxResponse getStudentData(HttpServletRequest request){
         authorityCheckService.checkStudentAuthority(request.getSession().getAttribute("userInfo"));
         Map m = (Map) request.getSession().getAttribute("userInfo");

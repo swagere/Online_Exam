@@ -28,7 +28,7 @@ public class HomePageController {
     AuthorityCheckService authorityCheckService;
 
     /*学生首页*/
-    //学号登录获取信息
+    //学号登录获取信息 获得全部考试
     @RequestMapping("/stu/id")
     public @ResponseBody
     AjaxResponse findStuById(@RequestBody String str, HttpServletRequest httpServletRequest) {
@@ -44,7 +44,7 @@ public class HomePageController {
 
 
     /*教师首页*/
-    //工号号登录获取信息
+    //工号号登录获取信息 获得全部课程
     @RequestMapping("/tea/id")
     public @ResponseBody
     AjaxResponse findTeaById(@RequestBody String str, HttpServletRequest httpServletRequest) {
