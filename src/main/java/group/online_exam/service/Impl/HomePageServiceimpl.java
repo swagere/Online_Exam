@@ -5,6 +5,7 @@ import group.online_exam.model.Course;
 import group.online_exam.model.CourseVO;
 import group.online_exam.model.Exam;
 import group.online_exam.model.StuExam;
+import group.online_exam.service.ExamService;
 import group.online_exam.service.HomePageService;
 import lombok.extern.slf4j.Slf4j;
 import org.dozer.DozerBeanMapper;
@@ -36,6 +37,8 @@ public class HomePageServiceimpl implements HomePageService {
     private TeaCoRepository teaCoRepository;
     @Autowired
     private DozerBeanMapper dozerBeanMapper;
+    @Autowired
+    ExamService examService;
 
     @Override
     public List<Object> findStuById(String stu_id, int status) {
@@ -50,6 +53,8 @@ public class HomePageServiceimpl implements HomePageService {
                 return null;
             }
             exams = examRepository.findExamsByExam_idAAndProgress_status(exam_idList,exam_status);
+
+            //正在进行中的考试
         }else if(status == 1){
             StuExam.Status stuExam_status = StuExam.Status.DONE;
             Exam.ProgressStatus exam_status = Exam.ProgressStatus.ING;
@@ -58,6 +63,8 @@ public class HomePageServiceimpl implements HomePageService {
                 return null;
             }
             exams = examRepository.findExamsByExam_idAAndProgress_status(exam_idList,exam_status);
+
+            //已阅卷的考试
         }else if(status == 2){
             StuExam.Status stuExam_status = StuExam.Status.DONE;
             Exam.ProgressStatus exam_status = Exam.ProgressStatus.DONE;
@@ -66,6 +73,8 @@ public class HomePageServiceimpl implements HomePageService {
                 return null;
             }
             exams = examRepository.findExamsByExam_idAAndProgress_status(exam_idList,exam_status);
+
+            //未阅卷的考试
         }else if (status == 3){
             StuExam.Status stuExam_status = StuExam.Status.WILL;
             Exam.ProgressStatus exam_status = Exam.ProgressStatus.DONE;
@@ -82,6 +91,7 @@ public class HomePageServiceimpl implements HomePageService {
             item.put("exam", exam);
             item.put("co_name", co_name);
             item.put("tea_name", tea_name);
+            item.put("grade",examService.getStuExamScore(exam.getExam_id(), stu_id));
             ret.add(item);
         }
         return ret;

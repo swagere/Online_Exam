@@ -18,17 +18,19 @@ public class LoginInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws IOException {
-
+//        if(request.getMethod().equals("OPTIONS")){
+//            return true;
+//        }
         log.info("登录状态拦截");
         HttpSession session = request.getSession();
         log.info("userInfo:"+session.getAttribute("userInfo"));
         //获取用户信息 如果没有用户信息就提示没有登录
         Object userInfo = session.getAttribute("userInfo");
-            if (userInfo == null) {
-            log.info("没有登录");
+        if (userInfo == null) {
+        log.info("没有登录");
 //            throw new CustomException(CustomExceptionType.USER_INPUT_ERROR, "没有登录或登录失败");
-            response.sendError(401,"没有登录或登陆失败");
-            return false;
+        response.sendError(401,"没有登录或登陆失败");
+        return false;
         }else {
             log.info("已登录，用户信息："+userInfo);
             return true;

@@ -8,10 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.Map;
@@ -19,6 +16,8 @@ import java.util.Map;
 @Slf4j
 @Controller
 @RequestMapping("/register")
+@ResponseBody
+//@CrossOrigin(origins = "http://192.168.3.14:8080", maxAge = 3600, allowCredentials = "true")
 public class RegisterController {
 
     @Autowired
