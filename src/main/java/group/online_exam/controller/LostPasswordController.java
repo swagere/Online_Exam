@@ -68,17 +68,22 @@ public class LostPasswordController {
      * @param params
      * @return
      */
-    @PostMapping("/checkCode")
-    public @ResponseBody AjaxResponse checkCode(@RequestBody Map<String, Object> params){
-        personalDataService.checkCode(params);
-        return AjaxResponse.success();
-    }
+//    @PostMapping("/checkCode")
+//    public @ResponseBody AjaxResponse checkCode(@RequestBody Map<String, Object> params){
+//        personalDataService.checkCode(params);
+//        return AjaxResponse.success();
+//    }
 
     /**
+     * 检测邮箱是否通过验证
      * 重置密码
      */
     @PostMapping("resetPassword")
     public @ResponseBody AjaxResponse resetPassword(@RequestBody Map<String, Object> params){
+        //检测邮箱是否通过验证
+        personalDataService.checkCode(params);
+
+        //重置密码
         String email = (String) params.get("email");
 
         Teacher tea = teacherRepository.findTeacherByEmail(email);
@@ -94,6 +99,7 @@ public class LostPasswordController {
                     log.info("密码位数过少");
                     throw new CustomException(CustomExceptionType.USER_INPUT_ERROR, "密码位数过少");
                 }
+                System.out.println(BCrypt.checkpw(newPassword, stu.getPassword()));
                 if (BCrypt.checkpw(newPassword, stu.getPassword())) {
                     throw new CustomException(CustomExceptionType.USER_INPUT_ERROR, "和原始密码重复");
                 }
@@ -130,6 +136,8 @@ public class LostPasswordController {
             return AjaxResponse.success();
         }catch (NonUniqueResultException e) {
             throw new CustomException(CustomExceptionType.USER_INPUT_ERROR,"该邮箱已存在");
+        }catch (CustomException e) {
+            throw e;
         } catch (Exception e) {
             throw new CustomException(CustomExceptionType.SYSTEM_ERROR,"系统未知异常");
         }

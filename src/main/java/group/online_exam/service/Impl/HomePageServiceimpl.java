@@ -45,6 +45,8 @@ public class HomePageServiceimpl implements HomePageService {
 
         List<Exam> exams = new ArrayList<>();
         List<Object> ret = new ArrayList<>();
+
+            //正在进行中 学生未完成的考试
         if(status == 0){
             StuExam.Status stuExam_status = StuExam.Status.WILL;
             Exam.ProgressStatus exam_status = Exam.ProgressStatus.ING;
@@ -54,7 +56,7 @@ public class HomePageServiceimpl implements HomePageService {
             }
             exams = examRepository.findExamsByExam_idAAndProgress_status(exam_idList,exam_status);
 
-            //正在进行中的考试
+            //正在进行中 学生已完成的考试
         }else if(status == 1){
             StuExam.Status stuExam_status = StuExam.Status.DONE;
             Exam.ProgressStatus exam_status = Exam.ProgressStatus.ING;
