@@ -100,12 +100,44 @@ public class HomePageServiceimpl implements HomePageService {
 
     }
 
+    @Override
+    public List<Object> findTeaById(String tea_id, int status) {
+        List<Exam> exams = new ArrayList<>();
+        List<Object> ret = new ArrayList<>();
 
+        //未发布的考试
+        if (status == 0) {
+            exams = examRepository.findExamsByTea_idAnd_distribute(tea_id, false);
+        }
+
+        //正在进行的考试
+        else if (status == 1) {
+            Exam.ProgressStatus progressStatus = Exam.ProgressStatus.ING;
+            exams = examRepository.findExamsByTea_idAndProgress_status(tea_id, progressStatus);
+        }
+
+        //已结束的考试
+        else if (status == 2) {
+            Exam.ProgressStatus progressStatus = Exam.ProgressStatus.DONE;
+            exams = examRepository.findExamsByTea_idAndProgress_status(tea_id, progressStatus);
+        }
+
+        for (Exam exam : exams) {
+            Map<String, Object> item = new HashMap<>();
+            String co_name = courseRepository.getNameByCo_id(exam.getCo_id());
+            String tea_name = teaRepository.getNameByTea_id(exam.getTea_id());
+            item.put("exam", exam);
+            item.put("co_name", co_name);
+            item.put("tea_name", tea_name);
+            ret.add(item);
+        }
+        return ret;
+    }
 
 
 
     @Override
-    public List<CourseVO> findTeaById(String tea_id) {
+    public List<CourseVO> findCourseById(String tea_id) {
         //获取教师所授课程
         List<String> co_idList = teaCoRepository.findCo_idByTea_Id(tea_id);
         if (co_idList.isEmpty()) {

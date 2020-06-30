@@ -50,7 +50,8 @@ public class HomePageController {
     AjaxResponse findTeaById(@RequestBody String str, HttpServletRequest httpServletRequest) {
         authorityCheckService.checkTeacherAuthority(httpServletRequest.getSession().getAttribute("userInfo"));
         String tea_id = JSON.parseObject(str).get("tea_id").toString();
-        List<CourseVO> json = homePageService.findTeaById(tea_id);
+        Integer status = Integer.valueOf(JSON.parseObject(str).get("status").toString());
+        List<Object> json = homePageService.findTeaById(tea_id, status);
         return AjaxResponse.success(json);
 
     }

@@ -10,7 +10,9 @@ import java.util.List;
 public interface HomePageService {
     List<Object> findStuById(String stu_id, int status) ;
 
-    List<CourseVO> findTeaById(String tea_id);
+    List<Object> findTeaById(String tea_id, int status);
+
+    List<CourseVO> findCourseById(String tea_id);
 
     String List2String(ArrayList<String> list);
 
