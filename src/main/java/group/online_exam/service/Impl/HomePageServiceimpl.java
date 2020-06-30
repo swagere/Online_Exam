@@ -105,9 +105,10 @@ public class HomePageServiceimpl implements HomePageService {
         List<Exam> exams = new ArrayList<>();
         List<Object> ret = new ArrayList<>();
 
-        //未发布的考试
+        //未开始的考试
         if (status == 0) {
-            exams = examRepository.findExamsByTea_idAnd_distribute(tea_id, false);
+            Exam.ProgressStatus progressStatus = Exam.ProgressStatus.WILL;
+            exams = examRepository.findExamsByTea_idAndProgress_status(tea_id, progressStatus);
         }
 
         //正在进行的考试
