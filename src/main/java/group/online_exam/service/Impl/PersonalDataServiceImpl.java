@@ -136,6 +136,7 @@ public class PersonalDataServiceImpl implements PersonalDataService {
             throw new CustomException(CustomExceptionType.USER_INPUT_ERROR,"该电话已被注册");
         }
 
+        teacher.setTelephone(newTeacherData.getTelephone());
         teacher.setName(newTeacherData.getName());
         teacher.setQq(newTeacherData.getQq());
         teacher.setWeixin(newTeacherData.getWeixin());
@@ -156,7 +157,7 @@ public class PersonalDataServiceImpl implements PersonalDataService {
                 log.info("该电话已被注册");
                 throw new CustomException(CustomExceptionType.USER_INPUT_ERROR,"该电话已被注册");
         }
-
+        student.setTelephone(newStudentData.getTelephone());
         student.setName(newStudentData.getName());
         student.setQq(newStudentData.getQq());
         student.setSex(newStudentData.getSex());
